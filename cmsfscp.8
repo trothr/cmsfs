@@ -1,0 +1,59 @@
+*
+*         Name: CMSFSCP 8 ("man page" nroff source)
+*       Author: Rick Troth, BMC Software, Inc., Houston, Texas, USA
+*         Date: 2000-Sep-10 (Sun)
+*
+ 
+.TH CMSFSCP 8 "Fri, 2000 Sep 08" CMSFS "CMSFS version 1.0"
+.UC 4
+ 
+.SH NAME
+cmsfscp \- copy files from CMS formatted volumes
+ 
+.SH SYNOPSIS
+\fBcmsfscp\fR [-d \fIcmsvol\fR] [-a | -i] \fIcmsfile\fR \fIunixfile\fR
+ 
+.SH DESCRIPTION
+\fBcmsfscp\fR
+copies files from CMS volumes to other Linux/390 filesystems.
+\fBcmsfscp\fR preserves the timestamp of the original file.
+ 
+.SH OPTIONS
+.TP
+\fB-d\fR \fIcmsvol\fR
+Specify the device to be used.
+\fIcmsvol\fR can be a regular file.
+ 
+.TP
+\fIcmsfile\fR
+Specify the file to read from CMS.
+ 
+.TP
+\fB-a\fR
+Copy the file as plain text (ASCII).
+ 
+.TP
+\fB-i\fR
+Copy the file as binary (IMAGE).
+ 
+.TP
+\fIunixfile\fR
+Specify the Unix file to write.
+ 
+.SH BUGS
+none (that we have yet found)
+ 
+.SH AUTHOR
+.nf
+This man-page written by Rick Troth <rtroth@bmc.com>,
+modelled after one written by Fritz Elfert <felfert@to.com>.
+.fi
+ 
+.SH SEE ALSO
+.BR cmsfscat (8)
+.BR cmsfsvol (8)
+.BR cmsfslst (8)
+.BR cmsfsck (8)
+.BR readcms (8)
+.BR cmsmount (8)
+ 

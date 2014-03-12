@@ -1,0 +1,51 @@
+MIME-Version: 1.0
+Content-Type: text/plain
+Date:         Mon, 19 Feb 01 17:00:00 CST
+From:         Rick Troth <rtroth@bmc.com>
+Organization: BMC Software, Inc.
+Subject:      CMS FS driver and utility
+To:           Linux/390 discussion <linux-390@vm.marist.edu>
+ 
+I am delighted to announce the availability of a driver and utility
+making the CMS minidisk filesystem readable directly on Linux.
+BMC is making this an open source contribution,  freely available,
+freely distributable,  full source,  no warranty,  GPL.
+ 
+        ftp://ftp.bmc.com/pub/cmsfs/cmsfs.tar.gz
+        ftp://ftp.bmc.com/pub/cmsfs/README
+        ftp://ftp.bmc.com/pub/cmsfs/INSTALL
+ 
+The README and INSTALL files are also replicated inside the
+TAR archive,  so you can transfer just the one file,  if you wish.
+ 
+CMS FS supports reading files from CMS volumes without mounting them
+(utility mode),  including reading files from CMS volume images
+on other UNIX besides Linux (tested on Solaris).   It also supports
+mounting CMS volumes on Linux (driver mode).   For example:
+ 
+        /sbin/insmod cmsfs.o
+        mount -t cms /dev/dasdd /CMS
+ 
+This note,  in fact,  was composed on CMS using XEDIT
+and placed on a CMS minidisk.   It was delivered to  'sendmail'
+on Linux directly from that same CMS volume.    Something like
+ 
+        cmsfscat -d /dev/dsk/01B5 -a cmsfs.mail | /usr/lib/sendmail -t
+         ... or ...
+        mount -t cms /dev/dsk/01B5 /mnt
+        cat /mnt/cmsfs.mail | /usr/lib/sendmail -t
+ 
+The first question many will ask is  "is it read-only?".
+Yes,  both the driver and the utility are read-only.
+ 
+The utility has been built on Linux/390, PC Linux, and Solaris.
+The "driver" has only been built on Linux/390 with the 2.2.16 kernel
+and only as a module,  not yet statically linked.
+Feedback is welcome.   Contributions are even more welcome.
+ 
+While you're visitting,  also check out the Patrol for Linux for S/390
+Preview package,  which includes the Patrol for Linux for S/390 Agent
+and accompanying Linux for S/390 Knowledge Module (KM).
+ 
+        http://www.bmc.com/ega/preview/8.3.01A/
+ 

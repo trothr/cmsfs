@@ -1,0 +1,89 @@
+README <plaintext> 2001-Jan-30 (Tue) CMSFS TXT
+ 
+        Rick Troth <rtroth@bmc.com>
+        Copyright © 2001, BMC Software, Inc., Houston, Texas, USA
+        See the LICENSE file for details.
+        See the INSTALL file for build instructions.
+ 
+WARNING:  The "driver" function included in this package 
+is untested,  and since drivers run in kernel space,  there is risk. 
+The "utility" function is safer because it runs in user space. 
+(I have not completed updating the driver since we crossed 
+the 2.2.x to 2.4.x line.   Working on it!) 
+ 
+This is the README file for the CMS Filesystem driver and utility.
+This file may also be found under the name cmsfs.txt.
+ 
+ALL TEXT FILES IN THIS PACKAGE
+have tab characters expanded for the purpose of "eat your own cookin",
+specifically that the package may be maintained on CMS, where tabs
+function as expected but are a hassle.   (It's an XEDIT thing.)
+ 
+This filesystem driver and utility is for the CMS "minidisk" filesystem,
+referred to as "EDF" in IBM's VM/ESA operating system (the CMS component).
+There was previously a "CDF" format which is not supported.
+ 
+Done in the 1.0 release:
+ 
+        'cmsfsvol' ---- report on a CMS volume in CMS 'Q DISK' format
+        'cmsfslst' ---- list CMS files in CMS 'LISTFILE' format
+        'cmsfscat' ---- conCATenate one or more CMS files to stdout
+        'cmsfsck' ----- filesystem check for CMS vols (aka: fsck.cmsfs)
+        'cmsfscp' ----- copy CMS files, preserving time stamps
+        libcmsfs.a ---- "archive" library for user space (utility) mode
+        cmsfs.o ------- the FS driver, for 'mount -t cms' to work
+ 
+The following objectives are not in the package as of 1.0:
+ 
+        'cmsfsls' ----- UNIX style listing (already have CMS style)
+        R/W capability
+        globbing in the utility
+        varying file conversion
+ 
+NOT SUPPORTED:  CDF (old CMS minidisk format),
+                hierarchical directories (sub-directories)
+                LFS volumes (LAN File Services; aka PWS volumes)
+ 
+As of 2000-Sep-08 all source files in this package
+are processed  *by*  this package.  That is,  they reside on a
+CMS minidisk hosted by VM/ESA, shared R/O with a Linux/390 guest,
+and copied to Linux storage using previously built CMS FS utilities.
+Once new sources are copied,  fresh executables are built from those,
+and the cycle continues.   This is good for QA.   This further means
+that many of the sources are maintained with CMS XEDIT,  for those
+who are interested in such things  (and you know who you are!).
+ 
+It seems reasonable for a filesystem driver to be able to reside
+in the filesystem type it supports.   So it is with this package.
+This leads to some funny names in the source directory.
+Please accept that as an artifact of committment to quality.
+ 
+As of 2001-Feb-18 (0.9.17) the driver is in a usable state.
+ 
+Exceptions abound:  Linux "dasd" driver does not flush its buffers,
+so we have to re-IPL to get new CMS content,  so we don't do this
+as often as we would like.
+ 
+utility functions:
+        cmsfs_vopen(), cmsfs_vclose()
+        cmsfs_fopen(), cmsfs_fclose()
+        cmsfs_open(), cmsfs_close()
+ 
+driver functions:
+        cmsfs_mount(), cmsfs_umount()
+        cmsfs_init(), cmsfs_cleanup()
+        init_module(), cleanup_module()
+ 
+common functions:
+        cmsfs_map_ADT()
+        cmsfs_map_FST()
+        cmsfs_map_EXT()
+        cmsfs_read(), cmsfs_lookup()
+ 
+functions with different code depending on the mode:
+        cmsfs_error()
+        cmsfs_bread()
+        cmsfs_malloc()
+        cmsfs_free()
+ 
+

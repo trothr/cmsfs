@@ -1,0 +1,43 @@
+*
+*         Name: CMSFSVOL 8 ("man page" nroff source)
+*       Author: Rick Troth, BMC Software, Inc., Houston, Texas, USA
+*         Date: 2000-Sep-10 (Sun)
+*
+ 
+.TH CMSFSVOL 8 "Sun, 2000 Sep 10" CMSFS "CMSFS version 1.0"
+.UC 4
+ 
+.SH NAME
+cmsfsvol \- report CMS formatted volume status
+in CMS 'Q DISK' style output.
+ 
+.SH SYNOPSIS
+\fBcmsfsvol\fR [-d \fIcmsvol\fR]
+ 
+.SH DESCRIPTION
+\fBcmsfsvol\fR
+reads volume label information from CMS minidisk volumes
+and reports in the same format as the CMS 'Q DISK'.
+ 
+.SH OPTIONS
+.TP
+\fB-d\fR \fIcmsvol\fR
+Specify the device to be used.
+\fIcmsvol\fR can be a regular file.
+ 
+.SH BUGS
+none (that we have yet found)
+ 
+.SH AUTHOR
+.nf
+This man-page and utility written by Rick Troth <rtroth@bmc.com>.
+.fi
+ 
+.SH SEE ALSO
+.BR cmsfscat (8)
+.BR cmsfslst (8)
+.BR cmsfscp (8)
+.BR cmsfsck (8)
+.BR readcms (8)
+.BR cmsmount (8)
+ 

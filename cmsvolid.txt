@@ -1,0 +1,34 @@
+char	ADTIDENT[4] ;   /*  VOL START / LABEL IDENTIFIER  */ 
+char	ADTVER[2] ;     /*  VERSION LEVEL  */ 
+ 
+->volid
+ 
+->bksiz		/* blocksize */ 
+ 
+->origin	/* disk origin pointer */ 
+ 
+->ncyls		/* cylinders used for filesystem (for disk) */ 
+->mcyls		/* max cylinders for filesystem (for disk) */ 
+ 
+->blocks	/* blocks in filesystem (blocks on disk) */ 
+->bkused	/* blocks used */ 
+ 
+->fstsz		/* FST size */ 
+->fstct		/* FST count */ 
+ 
+->ctime		/* creation time */ 
+ 
+->resoff	/* reserved offset */ 
+ 
+/* 
+char	ADTAMNB[4] ;    **  ALLOC MAP BLOCK WITH NEXT HOLE  ** 
+char	ADTAMND[4] ;    **  DISP INTO HBLK DATA OF NEXT HOLE  ** 
+char	ADTAMUP[4] ;    **  DISP INTO USER PART OF ALLOC MAP  ** 
+ */ 
+ 
+->sfnam
+ 
+->
+->
+->
+ 

@@ -1,0 +1,100 @@
+Return-Path: <LINUX-390@VM.MARIST.EDU>
+Received: from SYSCBMC (NJE origin CSMTP@SYSCBMC) by SYSCBMC.BMC.COM (LMail
+          V1.2d/1.8d) with BSMTP id 0223; Mon, 11 Sep 2000 11:25:52 -0500
+Received: from babbler.bmc.com [172.17.0.116] by SYSCBMC.bmc.com (IBM VM SMTP
+          Level 320) via TCP with ESMTP ; Mon, 11 Sep 2000 11:25:51 CDT
+Received: from trothnec.bmc.com (IDENT:root@trothnec.bmc.com [172.24.4.61])
+        by babbler.bmc.com (8.10.2/8.8.6) with ESMTP id e8BGTjb29595;
+        Mon, 11 Sep 2000 11:29:45 -0500 (CDT)
+Received: from localhost (IDENT:rtroth@localhost [127.0.0.1])
+        by trothnec.bmc.com (8.9.3/8.9.3) with ESMTP id LAA12044
+        for <rtroth@localhost>; Mon, 11 Sep 2000 11:29:03 -0500
+Received: from es06-hou
+        by localhost with IMAP (fetchmail-5.1.0)
+        for rtroth@localhost (single-drop); Mon, 11 Sep 2000 11:29:03 -0500
+        (CDT)
+Received: from tattler.bmc.com ([172.17.0.117]) by ec01-hou.bmc.com with SMTP
+          (Microsoft Exchange Internet Mail Service Version 5.5.2650.21)
+        id SK2MCZZP; Mon, 11 Sep 2000 11:27:56 -0500
+Received: from fw-us-hou1.bmc.com (localhost [127.0.0.1])
+        by tattler.bmc.com (8.10.2/8.8.6) with SMTP id e8BGR4T19800;
+        Mon, 11 Sep 2000 11:27:04 -0500 (CDT)
+Received:  by VM.MARIST.EDU (IBM VM SMTP Level 320) via spool with SMTP id 4880
+           ; Mon, 11 Sep 2000 12:25:41 EDT
+Received: from VM.MARIST.EDU (NJE origin LISTSERV@MARIST) by VM.MARIST.EDU
+          (LMail V1.2b/1.8b) with BSMTP id 6266; Mon, 11 Sep 2000 12:25:37 -0400
+Received: from VM.MARIST.EDU by VM.MARIST.EDU (LISTSERV release 1.8d) with NJE
+          id 9677 for LINUX-390@VM.MARIST.EDU; Mon, 11 Sep 2000 12:25:36 -0400
+Received: from MARIST (NJE origin SMTP@MARIST) by VM.MARIST.EDU (LMail
+          V1.2b/1.8b) with BSMTP id 6262; Mon, 11 Sep 2000 12:25:36 -0400
+Received: from orpheus.amdahl.com [159.199.101.3] by VM.MARIST.EDU (IBM VM SMTP
+          Level 320) via TCP with ESMTP ; Mon, 11 Sep 2000 12:25:34 EDT
+Received: from orpheus.amdahl.com (localhost [127.0.0.1]) by orpheus.amdahl.com
+          (8.9.3/8.9.3) with ESMTP id JAA03195 for <LINUX-390@VM.MARIST.EDU>;
+          Mon, 11 Sep 2000 09:25:39 -0700 (PDT)
+Received: from minerva.amdahl.com (minerva.amdahl.com [129.212.33.25]) by
+          orpheus.amdahl.com (8.9.3/8.9.3) with SMTP id JAA03191 for
+          <LINUX-390@VM.MARIST.EDU>; Mon, 11 Sep 2000 09:25:38 -0700 (PDT)
+Received: from jrn20-lt.ccc.amdahl.com by minerva.amdahl.com with smtp
+          (Smail3.1.29.1 #9) id m13YWOn-000MM8C; Mon, 11 Sep 2000 09:25 PDT
+X-Sender: jrn20@duts.ccc.amdahl.com
+X-Mailer: QUALCOMM Windows Eudora Light Version 3.0.6 (32)
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Message-ID:  <3.0.6.32.20000911091223.0086d3a0@duts.ccc.amdahl.com>
+Date:         Mon, 11 Sep 2000 09:12:23 -0700
+Reply-To: Linux on 390 Port <LINUX-390@VM.MARIST.EDU>
+Sender: Linux on 390 Port <LINUX-390@VM.MARIST.EDU>
+From: Jon Nolting <nolting@AMDAHL.COM>
+Subject:      Re: UTS 'cmsread' syntax
+To: LINUX-390@VM.MARIST.EDU
+ 
+Note that's it readcms and not cmsread.  From UTS 2.1.7.
+ 
+readcms      -vmid id -addr xxx -pw pass  -m mode
+           -f fname.ftype  -o ofile -bl -bi
+ 
+-vmid id    Uses id as the vmid to LINK to.
+ 
+-addr xxx   Uses xxx as the virtual  disk  address  for
+            the LINK command.
+ 
+-pw pass    Uses pw as the read password for  the  LINK
+            command.   If  this  is  not specified, and
+            -vmid and -addr are, the system prompts for
+            the    password   without   echoing.    See
+            getpass(3C).
+ 
+-m mode     Selects only files with the specified  mode
+            number between 1 and 5.
+ 
+-f fname.ftype
+            Causes the CMS file  with  name  fname  and
+            type ftype to be copied, if specified.
+ 
+-o fname    Causes the  file  specified  by  -f  to  be
+            copied  to  UTS file fname.  If you specify
+            -f and  not  -o,  the  file  is  copied  to
+            standard output.
+ 
+-bl         Causes the file specified by -f to  have  a
+            newline  character added to the end of each
+            record.  This is not appropriate  for  some
+            binary files.
+ 
+-bi         Causes the file specified by -f to  not  be
+            translated  from  EBCDIC to ASCII.  This is
+            needed for copying binary files.
+ 
+ 
+ 
+Can someone report the syntax of ye olde 'cmsread' command from UTS??
+ 
+Thanks!
+ 
+Jon Nolting
+Amdahl TMS (Technical Marketing Solutions)
+(408) 746-7584  -- Amdahl office and VM
+(925) 672-1249  -- Home office
+(888) 614-1883  -- Pager
+nolting@amdahl.com

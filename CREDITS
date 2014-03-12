@@ -1,0 +1,35 @@
+CREDITS <plaintext> 2001-Jan-30 (Tue) CMSFSWHO TXT
+ 
+Thanks to ...
+ 
+        CMS minidisk (EDF) filesystem specifications taken from
+        http://www.vm.ibm.com/pubs/cmsdacb/FSTD.HTML,
+        http://www.vm.ibm.com/pubs/cmsdacb/ADTSECT.HTML,
+        and the Linux kernel patches supplied by IBM (mdisk driver).
+ 
+        Thanks to Dave Hilbe for supporting this project.
+ 
+        Thanks to Arty Ecock <ECKCU@CUNYVM.CUNY.EDU> for pointing me
+        back at ADT after I had misunderstood it in my first look.
+ 
+        Thanks to Rob van der Heij for help with the logic.
+ 
+        Thanks to Neale Ferguson for "cpint".
+ 
+        Thanks to Willem Konynenberg <wfk@xos.nl>
+        for moral support and championing correct DASD I/O.
+ 
+        Thanks to Alan Cox for help figuring out Linux VFS.
+ 
+        Thanks to Reed Mullen for clarifying permission to use doc.
+ 
+        Thanks to Marilyn Troth for advice about packaging,  helping
+        me stay focused,  and for putting up with all the late nights.
+ 
+        ... and many others whom I am sorry to have omitted.
+ 
+I looked at every filesystem driver in the Linux 2.2.16 source
+in researching the CMS FS driver,  particularly  ext2, isofs,  and the
+fat, vfat, and msdos  family.   I looked at GNU Fileutiles source
+in researching the CMS FS utility.
+ 

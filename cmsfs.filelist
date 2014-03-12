@@ -1,0 +1,62 @@
+*
+*
+*         Name: CMSFS FILELIST (aka "cmsfs.filelist")
+*       Author: Rick Troth, BMC Software, Inc., Houston, Texas, USA
+*         Date: 2000-Sep-20 (Wed)
+*
+* syntax of this file:
+*     cmsfname cmsftype fm UNIXname
+*
+* Package Manifest (this file):
+      CMSFS    FILELIST *  MANIFEST
+      CMSFSVFS FILELIST *  MANIFEST-DRIVER
+*
+      CMSFS    TXT      *  README
+      CMSFSGPL TXT      *  LICENSE
+      CMSFSMAK TXT      *  INSTALL
+      CMSFSWHO TXT      *  CREDITS
+      CMSFS    CHANGES  *  CHANGELOG
+      CMSFS    HTML     *
+*
+* Core Components:
+      CMSFS    H        *
+      CMSFSANY C        *
+*     CMSFSVFS C        *  syn-link to either CMSFS22X or CMSFS24X
+      CMSFS22X C        *
+      CMSFS24X C        *
+      CMSFSUSA C        *
+      CMSFSEXT H        *
+      CMSFSMSG H        *
+      AECS     C        *
+      AECS     H        *
+      CMSFS    MAKEFILE *
+      CMSFSVFS MAKEFILE *
+      CMSFSCFG SH       *  configure
+      CMSFSTAB SH       *
+      CMSFSSED SH       *
+      CMSMOUNT 8        *
+*
+* Utility Programs:
+      CMSFSCAT C        *
+      CMSFSCAT 8        *
+      CMSFSLST C        *
+      CMSFSLST 8        *
+      CMSFSVOL C        *
+      CMSFSVOL 8        *
+      CMSFSCP  C        *
+      CMSFSCP  8        *
+      CMSFSCK  C        *
+      CMSFSCK  8        *
+*     CMSFSLS  C        *
+*     CMSFSLS  8        *
+*     CMSEXIST C        *
+*     CMSEXIST 8        *
+*
+* Supplemental Components:
+      READCMS  NOTE     *
+      READCMS  SH       *
+*     _REFRESH SH       *
+      _TESTRUN SH       *
+      CMSFSDD  EXEC     *
+      CMSFS    SPEC     *
+*

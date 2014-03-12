@@ -1,0 +1,18 @@
+<html> 
+ 
+<head> 
+<title>CMS FS content conversions</title>
+</head> 
+ 
+<body> 
+ 
+<!-- 
+		cmsfsext.html, cmsfsext.htmlhead 
+  --> 
+ 
+<p> 
+This is a list of the default conversions in the CMS FS driver. 
+ 
+<blockquote><table border=1> 
+<tr><td><i>CMS filetype</i><td><i>conversion</i></tr>
+<!-- start of machine-generated HTML --> 

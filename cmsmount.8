@@ -1,0 +1,58 @@
+.\"
+.\"
+.\"       Name: CMSMOUNT 8 (man page source)
+.\"     Author: Rick Troth, BMC Software, Inc., Houston, Texas, USA
+.\"       Date: 2001-Feb-19 (Mon)
+.\"
+.\"        Ref: http://www.linuxdoc.org/HOWTO/mini/Man-Page.html
+.\"             Thank you Jens Schweikhardt!
+.\"
+.\"
+ 
+.TH CMSMOUNT 8 "2001 February 19" CMSFS "CMSFS 1.0"
+ 
+.SH NAME mount -t cms \- mount a CMS volume
+ 
+.SH SYNOPSIS
+.B /sbin/insmod cmsfs.o
+.BR
+.B mount -r -t cms
+.I cmsvolume
+.I mountpoint
+ 
+.SH DESCRIPTION
+.B cmsfs.o
+is the filesystem driver for CMS volumes,  presently only built
+as a module and not statically linked into the kernel.
+.B mount
+is of course the regular Linux mount command.
+With the CMS FS filesystem driver installed,
+the "-t cms" filesystem can be mounted.
+ 
+.SH OPTIONNS
+none
+ 
+.SH FILES
+.I /dev/dasd?
+.RS
+DASD devices which hold CMS volumes.
+Note that the full volume is used,  for example
+/dev/dasdc rather than /dev/dasdc1.
+ 
+.SH BUGS
+This CMS FS package is read-only.
+It also uses its own mktime() function instead of GLIBC
+and doesn't account for timezone.
+CMS files must have an LRECL of 4094 or less.
+ 
+.SH AUTHOR Rick Troth <rtroth@bmc.com>
+ 
+.SH SEE ALSO
+.BR mount (8)
+.BR cmsfscat (8)
+.BR cmsfslst (8)
+.BR cmsfsvol (8)
+.BR cmsfsck (8)
+.BR cmsfscp (8)
+.BR readcms (8)
+ 

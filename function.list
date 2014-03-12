@@ -1,0 +1,22 @@
+ 
+utility:                                                                        
+cmsfs_vopen(), cmsfs_vclose() 
+cmsfs_fopen(), cmsfs_fclose() 
+cmsfs_read                                                                      
+ 
+driver:                                                                         
+cmsfs_mount() 
+cmsfs_init(), cmsfs_cleanup() 
+init_module(), cleanup_module() 
+ 
+common:                                                                         
+cmsfs_map_ADT() 
+cmsfs_map_FST() 
+ 
+changing (unique code for util and driver): 
+cmsfs_error() 
+cmsfs_bread() 
+cmsfs_malloc() 
+cmsfs_free() 
+
+

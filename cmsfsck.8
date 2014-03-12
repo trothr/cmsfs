@@ -1,0 +1,48 @@
+*
+*         Name: CMSFSCK 8 ("man page" nroff source)
+*       Author: Rick Troth, BMC Software, Inc., Houston, Texas, USA
+*         Date: 2000-Sep-10 (Sun)
+*
+ 
+.TH CMSFSCK 8 "Sun, 2000 Sep 10" CMSFS "CMSFS version 1.0"
+.UC 4
+ 
+.SH NAME
+fsck.cms \- check a CMS formatted volume
+ 
+.SH SYNOPSIS
+\fBfsck.cms\fR [-d \fIcmsvol\fR]
+ 
+.SH DESCRIPTION
+\fBfsck.cms\fR
+attempts to validate a CMS minidisk volume
+and silently returns without error if the operation succeeds.
+ 
+.SH OPTIONS
+All options are for compatibility.
+cmsfsck should be called as fsck.cms from 'fsck'
+ 
+.SH ALIAS
+\fBfsck.cms\fR
+is built as
+\fBcmsfsck\fR
+and copied to
+\fB/sbin/fsck.cms\fR
+ 
+.SH BUGS
+\fBfsck.cms\fR
+does not attempt repair of a damaged CMS filesystem.
+ 
+.SH AUTHOR
+.nf
+This man-page and utility written by Rick Troth <rtroth@bmc.com>.
+.fi
+ 
+.SH SEE ALSO
+.BR cmsfscat (8)
+.BR cmsfsvol (8)
+.BR cmsfslst (8)
+.BR cmsfscp (8)
+.BR readcms (8)
+.BR cmsmount (8)
+ 

@@ -1,0 +1,7 @@
+s#%PREFIX%#/usr#g
+s#%DEFINES%# -DCMSFS_HOST_ASCII#g
+s#%INCLUDES%##g
+s#%LINUX_RELEASE%#3.x#g
+s#%DRIVER_SOURCE%##g
+s#%MODULES_DIRECTORY%##g
+s#^        #	#

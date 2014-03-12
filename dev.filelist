@@ -1,0 +1,41 @@
+*
+*
+*
+*         Date: 2001-Mar-16 (Fri)
+*               Thoughts on how we *might* layer other UNIX filetypes
+*               onto CMS FS: directory, block special, char special,
+*               named socket, named pipe, and symbolic link.
+*               This is not unlike UMSDOS in concept,
+*               and useful for pretty much the same reasons.
+*
+*
+*
+*     CMSFNAME CMSFTYPE FM UNIXfilename
+*     -------- -------- -- ------------------------
+*     cmslegal cmslegal *  = ordinary file "cmslegal.cmslegal"
+*     any file listed by its legal CMS fn/ft is a regular file
+      DEV      FILELIST *  this_directory_as_plaintext
+*     -------- -------- -- ------------------------
+*     dirname  *D       *  = directory defined by dirname FILELIST
+      PTS      *D       *  pts
+      SHM      *D       *  shm
+*     -------- -------- -- ------------------------
+*     #maj#min *B       *  = block special
+      #94#0    *B       *  dasda
+      #94#1    *B       *  dasda1
+*     -------- -------- -- ------------------------
+*     #maj#min *C       *  = character special
+      #5#0     *C       *  tty
+      #5#1     *C       *  console
+*     -------- -------- -- ------------------------
+*     anything *S       *  = named socket
+      *        *S       *  log
+*     -------- -------- -- ------------------------
+*     anything *P       *  = named pipe (FIFO)
+      *        *P       *  initctl
+*     -------- -------- -- ------------------------
+*     linktext *L       *  = symbolic link
+      ftp://ftp.bmc.com/pub/cmsfs/cmsfs.tar.gz  *L  *  cmsfs.tar.gz
+      .        *L       *  this_directory_as_a_link
+*
+*

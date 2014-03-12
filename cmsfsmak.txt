@@ -1,0 +1,51 @@
+INSTALL <plaintext> 2001-Feb-01 (Thu) CMSFSMAK TXT
+ 
+This file explains how to build the CMS FS utility and/or driver.
+To build the package as a filesystem driver,  see the end of this doc.
+There is presently NOT a  'make install'  step,  so you will
+have to manually copy or move the resulting executables to the
+searchable directory of your choice.
+ 
+Extract the TAR file.
+This should result in the creation of a "cmsfs" directory.
+(A copy of this file is in the archive and will be in that directory.)
+Get into that directory,  and issue the commands
+ 
+                ./configure
+                make clean
+                make all
+ 
+There will be five executables:
+ 
+        cmsfscat, cmsfslst, cmsfsvol, cmsfscp, and cmsfsck
+ 
+To get 'cmsfsck' handled by /sbin/fsck,  rename it to "fsck.cms"
+and copy it to /sbin.   With /sbin/fsck.cms in place,  on can add
+CMS volumes to /etc/fstab and have them pass start-up FS checks.
+Of course,  if they don't pass,  Linux won't come all the way up.
+YOU HAVE BEEN WARNED.
+ 
+To get CMS volumes mounted automatically,  they must be
+listed in /etc/fstab and you must also arrange for the driver
+to be installed at start-up,  or mark them as  "noauto".
+(See the "build the package as a driver" section below.)
+YOU HAVE BEEN WARNED.
+ 
+The man pages have not been updated in several months.
+ 
+You should also find one or more sample disk images in the "dsk"
+sub-directory.  These were read directly from CMS minidisk volumes
+(with 'dd' on mainframe Linux) and can be used to verify the utility
+wherever real CMS minidisks are unavailable, like on a Solaris system.
+A CMS minidisk image of 1474560 bytes can be copied (with 'dd')
+onto a 1.44M floppy.   Try it!
+ 
+To build the package as a driver ...
+ 
+                ./configure
+                make clean
+                make module
+                insmod cmsfs.o
+                mount -r -t cms /dev/dasdx /mnt
+ 
+ 

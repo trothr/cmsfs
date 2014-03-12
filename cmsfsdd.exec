@@ -1,0 +1,46 @@
+/*
+ *
+ *        Name: CMSFSDD EXEC (REXX)
+ *              CMS FS Disk Dump utility
+ *      Author: Rick Troth, BMC Software, Inc., Houston, Texas, USA
+ *        Date: 2000-Dec-08 (Fri)
+ *
+ */
+ 
+Parse Upper Arg dm fn ft fm . '(' . ')' .
+/*  at least one required argument:  source disk filemode  */
+If dm = "" Then Do
+    Say "missing argument(s)"
+    Say "Usage:  [EXEC]  CMSFSDD  fm1  fn2 ft2 fm2"
+    Exit 24
+    End  /*  If .. Do  */
+ 
+/*  query that disk;  what does it look like?  */
+Address CMS 'STATE * *' dm
+If rc ^= 0 Then Exit rc
+'PIPE COMMAND QUERY DISK' dm '| DROP FIRST | VAR QDISK'
+ 
+/*  default target filename matches source disk label  */
+If fn = "" Then Parse Var qdisk fn .
+If ft = "" Then ft = "DSK"
+If fm = "" Then fm = "A"
+ 
+/*  Cannot copy a disk image to a file on same disk!  */
+If fm = dm Then Do
+    Say "target filemode and source filemode must be different"
+    Exit 24
+    End  /*  If .. Do  */
+ 
+/*  determine source disk blocksize  */
+Parse Var qdisk . 32 blocksize 36 .
+blocksize = Strip(blocksize)
+ 
+/*  determine source disk size in blocks  */
+Parse Var qdisk . 71 blocks 81 .
+blocks = Strip(blocks)
+ 
+Say "PIPE MDISKBLK" dm "1-" || blocks "| >" fn ft fm "F" blocksize
+'PIPE MDISKBLK' dm '1-' || blocks '| >' fn ft fm 'F' blocksize
+ 
+Exit rc
+ 

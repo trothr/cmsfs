@@ -1,0 +1,103 @@
+/* ------------------------------------------------------------ CMSFSRD2
+ *  "Read Function number Two" -- read a block from a CMS file
+ *  See CMSFSRD1 for additional comments.   This is a second attempt. 
+ */
+int cmsfsrd2(struct CMSINODE *inode,void *buffer,int block)
+  {
+ 
+#ifdef  CMSFS_DEBUG
+(void) printf("cmsfsrd2(-,-,%d)\n",block);
+#endif 
+(void) printf("cmsfsrd2(-,-,%d) level %d\n",block,inode->level);
+ 
+    /*  seek to file origin, or thereabouts  */
+    rc = lseek(inode->cmssuper->devfd,offset,SEEK_SET);
+    if (rc != offset)
+      {
+        (void) perror("cmsfsrd1()");
+        (void) printf("lseek(-,%d,SEEK_SET) failed\n",offset);
+(void) printf("PSIZE=%d ; BKSIZ=%d ; LEVEL=%d ; START=%d\n",
+inode->psize,inode->cmssuper->blksz,inode->level,inode->start);
+        return rc;
+      }
+ 
+    /*  read first block  */
+    rc = read(inode->cmssuper->devfd,buffer,inode->cmssuper->blksz);
+    if (rc != inode->cmssuper->blksz)
+      {
+        (void) perror("cmsfsrd1()");
+        (void) printf("read(-,-,%d) failed\n",inode->cmssuper->blksz);
+(void) printf("PSIZE=%d ; BKSIZ=%d ; LEVEL=%d ; START=%d\n",
+                inode->psize,inode->cmssuper->blksz,inode->level,inode->start);
+        return rc;
+      }
+ 
+    /*  shift HIBITS back  */
+    for ( i = 0 ; i < inode->level ; i++ ) hibits *= ppb;
+ 
+    /*  step through levels of indirection  */
+    for ( l = 1 ; l <= inode->level ; l++ )
+      {
+        int next, hinext;
+ 
+        /*  compute offset into this index block to find pointer  */
+        offset = block - hibits;
+#ifdef  CMSFS_DEBUG
+(void) printf("BLOCK=%d ; OFFSET=%d ; LEVEL=%d (before)\n",block,offset,l);
+#endif
+        for ( i = l ; i < inode->level ; i++ ) offset /= ppb;
+#ifdef  CMSFS_DEBUG
+(void) printf("BLOCK=%d ; OFFSET=%d ; LEVEL=%d (after)\n",block,offset,l);
+#endif
+        hinext = offset;
+        offset *= inode->psize;
+ 
+        offset += (int)buffer;
+/*
+        next = cmsfsbex ( (void*)offset , inode->psize ) ;
+ */
+        next = cmsfsbex ( (void*)offset , 4 ) ;
+        next -= 1;      /*  CMS counts from one  */
+#ifdef  CMSFS_DEBUG
+(void) printf("NEXT %d\n",next);
+#endif
+        next *= inode->cmssuper->blksz;
+ 
+        /*  seek to block for next level  */
+        rc = lseek(inode->cmssuper->devfd,next,SEEK_SET);
+        if (rc != next)
+          {
+            (void) perror("cmsfsrd1()");
+            (void) printf("lseek(-,%d,SEEK_SET)\n",inode->start);
+(void) printf("PSIZE=%d ; BKSIZ=%d ; LEVEL=%d ; START=%d\n",
+                inode->psize,inode->cmssuper->blksz,inode->level,inode->start);
+            return rc;
+          }
+ 
+        /*  read first block  */
+        rc = read(inode->cmssuper->devfd,buffer,inode->cmssuper->blksz);
+        if (rc != inode->cmssuper->blksz)
+          {
+            (void) perror("cmsfsrd1()");
+            (void) printf("read(-,-,%d)\n",inode->cmssuper->blksz);
+(void) printf("PSIZE=%d ; BKSIZ=%d ; LEVEL=%d ; START=%d\n",
+                inode->psize,inode->cmssuper->blksz,inode->level,inode->start);
+            return rc;
+          }
+ 
+        /*  shift and accum levels we've processed  */
+        for ( i = l ; i < inode->level ; i++ ) hinext *= ppb;
+        hibits += hinext;
+      }
+ 
+/*
+(void) printf("BKSIZ=%d ; PSIZE=%d ; PPB=%d ; MAX=%d\n",
+inode->cmssuper->blksz,inode->psize,ppb,max);
+ */
+ 
+    rc = 0 ;
+ 
+    return rc;
+  }
+ 
+ 

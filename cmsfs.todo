@@ -1,0 +1,41 @@
+ 
+Done:
+ 
+	'cmsfsvol' -- report on a CMS volume in CMS 'Q DISK' format
+	'cmsfslst' -- list CMS files in CMS 'LISTFILE' format
+	'cmsfscat' -- conCATenate one or more CMS files to stdout
+	'cmsfsck', aka 'fsck.cmsfs', filesystem check or CMS vols
+	'cmsfscp' --- "copy" CMS files, preserving time stamps
+	libcmsfs.a -- "archive" library for user space (utility) mode
+ 
+To do for 1.0 ...
+ 
+	cmsfs.o ----- the FS driver, for 'mount -t cms' to work
+	'cmsfsls' --- UNIX style listing; we have CMS style listing
+ 
+The following objectives are not in the package as of 1.0:
+ 
+	R/W capability in the driver
+	R/W capability in the utility
+	globbing in the utility
+ 
+ 
+NOT SUPPORTED:	CDF (old CMS format),
+		hierarchical directories (sub-directories)
+		LFS volumes (LAN File Services)
+ 
+ 
+As of 2000-Sep-08 10:14 all source files in this package
+are processed  *by*  this package.  That is,  they are housed on a
+CMS minidisk shared R/O with Linux/390 and copied to Linux storage
+using previously built CMS FS utilities.  Once new sources are copied,
+fresh executables are built from those,  and the cycle continues.
+This further means that many of the sources are maintained with
+CMS XEDIT, for those who are interested in such things
+(and you know who you are!).
+ 
+Exceptions abound:  Linux "dasd" driver does not flush its buffers,
+so we have to re-IPL to get new CMS content,  so we don't do this
+as often as we would like.
+ 
+ 

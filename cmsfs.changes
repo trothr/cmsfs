@@ -1,0 +1,30 @@
+ 
+ ---
+ 
+Stuff that (I think) Alan Cox did (or wanted me to do):
+ 
+fixed in header:
+c/CMSINODE/cms_inode/* *
+c/CMSSUPER/cms_super/* *
+ 
+Removed utility function prototypes from cmsfs.h.
+ 
+Removed function prototypes from aecs.h, leaving macros.
+ 
+Changed chratoe() and friends from AECS to "static inline int"
+and moved into one compilation unit, cmsfsvfs.c.
+ 
+Moved cmsfs_find_label() and friends into cmsfsvfs.c.
+ 
+ ---
+ 
+There is a bug that shows up in the driver
+where a file will have a size of 4294967295 bytes (4GB minus 1).
+I haven't yet found what causes this.
+ 
+There was previously a bug reported by Adam Thornton
+where the physical and logical blocksizes had to match.
+I don't remember  (it's been a year!)  whether this got fixed.
+Shows up on things like a 1K blocked CMS disk on FBA (w/ 512 phys).
+ 
+
