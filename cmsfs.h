@@ -9,9 +9,12 @@
  *              Rick Troth <rmt@casita.net>
  *
  *              Some specifications contained here were taken from
- *              http://www.vm.ibm.com/pubs/cmsdacb/FSTD.HTML,
- *              http://www.vm.ibm.com/pubs/cmsdacb/ADTSECT.HTML,
+ *              http://www.vm.ibm.com/pubs/cmsdacb/FSTD.HTML (stale 2014),
+ *              http://www.vm.ibm.com/pubs/cmsdacb/ADTSECT.HTML (state 2014),
  *              and the Linux kernel patches supplied by IBM (mdisk).
+ *
+ *		now (2014) at: http://www.vm.ibm.com/pubs/cms630/FSTD.HTML
+ *		now (2014) at: http://www.vm.ibm.com/pubs/cms630/ADTSECT.HTML
  *
  *              Some specifications contained here were taken from
  *              other filesystem drivers found in the Linux source tree.
