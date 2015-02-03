@@ -3,8 +3,8 @@ CREDITS <plaintext> 2001-Jan-30 (Tue) CMSFSWHO TXT
 Thanks to ...
  
         CMS minidisk (EDF) filesystem specifications taken from
-        http://www.vm.ibm.com/pubs/cmsdacb/FSTD.HTML,
-        http://www.vm.ibm.com/pubs/cmsdacb/ADTSECT.HTML,
+        http://www.vm.ibm.com/pubs/cms630/FSTD.HTML,
+        http://www.vm.ibm.com/pubs/cms630/ADTSECT.HTML,
         and the Linux kernel patches supplied by IBM (mdisk driver).
  
         Thanks to Dave Hilbe for supporting this project.
