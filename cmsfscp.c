@@ -46,7 +46,7 @@ int main(int argc,unsigned char *argv[])
     struct  stat  targstat;
 
     cmsflags = CMSFSANY;
-    stdflags = O_RDWR|O_CREAT;
+    stdflags = O_RDWR|O_CREAT|O_TRUNC;
     source = target = devname = (unsigned char *) "";
     /*  DRAT COMPILERS THAT DON'T GROK UNSIGNED CHAR!  */
 
