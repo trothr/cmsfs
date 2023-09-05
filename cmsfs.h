@@ -13,18 +13,20 @@
  *              http://www.vm.ibm.com/pubs/cmsdacb/ADTSECT.HTML (state 2014),
  *              and the Linux kernel patches supplied by IBM (mdisk).
  *
- *		now (2014) at: http://www.vm.ibm.com/pubs/cms630/FSTD.HTML
- *		now (2014) at: http://www.vm.ibm.com/pubs/cms630/ADTSECT.HTML
+ *              (2014) at: http://www.vm.ibm.com/pubs/cms630/FSTD.HTML
+ *              (2014) at: http://www.vm.ibm.com/pubs/cms630/ADTSECT.HTML
  *
  *              Some specifications contained here were taken from
  *              other filesystem drivers found in the Linux source tree.
  *
+ *              Use 'iconv -f iso8859-1' to read this file on Linux.
+ *
  */
 
 #define         CMSFS_AUTHOR            "Rick Troth <rmt@casita.net>"
-#define         CMSFS_DESCRIPTION      "CMS Minidisk Filesystem Support"
-#define         CMSFS_VERSION           "1.1.10"
-#define         CMSFS_DATE              "2014-02-23" /* 2014-Feb-23 */
+#define         CMSFS_DESCRIPTION       "CMS Minidisk Filesystem Support"
+#define         CMSFS_VERSION           "1.1.11"
+#define         CMSFS_DATE              "2023-09-05"   /* 2023-Sep-05 */
 /*        Note! The "v" and "r" of the VRM should match               *
  *              between this header and the RPM "spec" file.          *
  *              The "m" (VRM) and the "release" (RPM) might not.      */

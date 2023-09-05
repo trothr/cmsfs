@@ -9,7 +9,7 @@
 #         Date: 2000-Nov-03 (Fri)
 #               2002-Nov-04 (Mon)
 #               2002-Nov-08 (Fri)
-#
+#               2023-09-05 (Tue) fixup to support *any* Linux release
 #
 #
 
@@ -55,8 +55,8 @@ while [ ! -z "$*" ] ; do
             echo "$Z: unrecognized parameter '$1'" 1>&2
             exit 24
             ;;
-        esac
-    done
+    esac
+done
 
 #
 # is this an ASCII system?
@@ -72,59 +72,78 @@ case "$NL" in
         echo "$Z: what kind of newline is '$NL'?" 1>&2
         exit 32
         ;;
-    esac
+esac
 
-#
-# for the driver, use the right VFS interface shim:
-case `uname -r` in
+case `uname -s` in
 
-    2.2*|2.3*)
-        LINUX_RELEASE="2.2"
-#       ln -s cmsfs22x.c cmsfsvfs.c
-        INCLUDES="-I/usr/include/linux"
-        DRIVER_SOURCE="cmsfs22x.c"
-        MODULES_DIRECTORY="/lib/modules/`uname -r`/fs"
+    Linux)
+
+        # for the driver, use the right VFS interface shim:
+        case `uname -r` in
+
+            2.2*|2.3*)
+                LINUX_RELEASE="2.2"
+#               ln -s cmsfs22x.c cmsfsvfs.c
+                INCLUDES="-I/usr/include/linux"
+                DRIVER_SOURCE="cmsfs22x.c"
+                MODULES_DIRECTORY="/lib/modules/`uname -r`/fs"
+                ;;
+
+            2.4*|2.5*)
+                LINUX_RELEASE="2.4"
+#               ln -s cmsfs24x.c cmsfsvfs.c
+                INCLUDES="-I/lib/modules/`uname -r`/build/include"
+                DRIVER_SOURCE="cmsfs24x.c"
+                MODULES_DIRECTORY="/lib/modules/`uname -r`/kernel/fs"
+#               MODULES_DIRECTORY="/lib/modules/`uname -r`/kernel/fs/cmsfs"
+                ;;
+
+            2.6*)
+                LINUX_RELEASE="2.6"
+#               ln -s cmsfs26x.c cmsfsvfs.c
+#               INCLUDES="-I/lib/modules/`uname -r`/build/include"
+#               DRIVER_SOURCE="cmsfs26x.c"
+#               MODULES_DIRECTORY="/lib/modules/`uname -r`/kernel/fs"
+#               MODULES_DIRECTORY="/lib/modules/`uname -r`/kernel/fs/cmsfs"
+                echo "$Z: The DRIVER does not work with Linux 2.6 and beyond." 1>&2
+                echo "$Z: (The utility should give you no trouble.)" 1>&2
+                ;;
+
+            3.*)
+                LINUX_RELEASE="3.x"
+#               ln -s cmsfs3xx.c cmsfsvfs.c
+#               INCLUDES="-I/lib/modules/`uname -r`/build/include"
+#               DRIVER_SOURCE="cmsfs24x.c"
+#               MODULES_DIRECTORY="/lib/modules/`uname -r`/kernel/fs"
+#               MODULES_DIRECTORY="/lib/modules/`uname -r`/kernel/fs/cmsfs"
+                echo "$Z: The DRIVER does not work with Linux 3.x and beyond." 1>&2
+                echo "$Z: (The utility should give you no trouble.)" 1>&2
+                ;;
+
+            *)
+                LINUX_RELEASE="4+"
+                echo "$Z: The DRIVER does not work with Linux 4.x and beyond." 1>&2
+                echo "$Z: (The utility should give you no trouble.)" 1>&2
+#               if [ `uname -s` = "Linux" ] ; then
+#                   echo "$Z: this release of Linux is not supported!" 1>&2
+#                   exit 28
+#               fi
+                ;;
+
+        esac
+
+        # new trick: tainted system by way of proprietary modules
+        if [ `uname -r` = "2.4.19" ] ; then
+            DEFINES="$DEFINES -DCMSFS_LICENSED" ; fi
+
         ;;
-    2.4*|2.5*)
-        LINUX_RELEASE="2.4"
-#       ln -s cmsfs24x.c cmsfsvfs.c
-        INCLUDES="-I/lib/modules/`uname -r`/build/include"
-        DRIVER_SOURCE="cmsfs24x.c"
-        MODULES_DIRECTORY="/lib/modules/`uname -r`/kernel/fs"
-#       MODULES_DIRECTORY="/lib/modules/`uname -r`/kernel/fs/cmsfs"
-        ;;
-    2.6*)
-        LINUX_RELEASE="2.6"
-#       ln -s cmsfs24x.c cmsfsvfs.c
-#        INCLUDES="-I/lib/modules/`uname -r`/build/include"
-#        DRIVER_SOURCE="cmsfs24x.c"
-#        MODULES_DIRECTORY="/lib/modules/`uname -r`/kernel/fs"
-#       MODULES_DIRECTORY="/lib/modules/`uname -r`/kernel/fs/cmsfs"
-	echo "$Z: The DRIVER does not work with Linux 2.6." 1>&2
-	echo "$Z: (The utility should give you no trouble.)" 1>&2
-        ;;
-    3.*)
-        LINUX_RELEASE="3.x"
-#       ln -s cmsfs24x.c cmsfsvfs.c
-#        INCLUDES="-I/lib/modules/`uname -r`/build/include"
-#        DRIVER_SOURCE="cmsfs24x.c"
-#        MODULES_DIRECTORY="/lib/modules/`uname -r`/kernel/fs"
-#       MODULES_DIRECTORY="/lib/modules/`uname -r`/kernel/fs/cmsfs"
-	echo "$Z: The DRIVER does not work with Linux 3.x." 1>&2
-	echo "$Z: (The utility should give you no trouble.)" 1>&2
-        ;;
+
     *)
-        if [ `uname -s` = "Linux" ] ; then
-            echo "$Z: this release of Linux is not supported!" 1>&2
-            exit 28
-            fi
+        # for all other platforms than Linux there is no FS driver
+        :
         ;;
-    esac
 
-#
-# new trick: tainted system by way of proprietary modules
-if [ `uname -r` = "2.4.19" ] ; then
-        DEFINES="$DEFINES -DCMSFS_LICENSED" ; fi
+esac
 
 #
 # platform-specific substutions ...
@@ -138,7 +157,5 @@ echo "s#%MODULES_DIRECTORY%#$MODULES_DIRECTORY#g"
 echo "" | awk '{printf "s#^        #\t#\n"}'
 
 exit
-
-
 
 
