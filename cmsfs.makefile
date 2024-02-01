@@ -25,13 +25,20 @@ CMSMOUNT        =       /tmp/cms1fs
 DEFINES         =       %DEFINES%
 INCLUDES        =       %INCLUDES%
 PREFIX          =       %PREFIX%
+BINDIR          =       %PREFIX%/bin
+LIBDIR          =       %PREFIX%/lib
+ETCDIR          =       %ETCDIR%
+SBINDIR         =       %SBINDIR%
 LINUX_RELEASE   =       %LINUX_RELEASE%
-DRIVER_SOURCE   =	%DRIVER_SOURCE%
+DRIVER_SOURCE   =       %DRIVER_SOURCE%
 MODULES_DIRECTORY  =    %MODULES_DIRECTORY%
 
 #
 # list of target objects for the utility
 OBJECTS         =       cmsfscat cmsfslst cmsfsvol cmsfsck cmsfscp
+
+.PHONY:         _default all clean distclean veryclean help \
+                module install
 
 #
 # when the user does a "just make" easy build
@@ -46,26 +53,26 @@ all:            $(OBJECTS) libcmsfs.a
 make:           makefile
 
 makefile:       cmsfs.makefile cmsfscfg.sed makefile.in
-		@rm -f makefile-OLD makefile.old
-		@if [ -f makefile ] ; then mv makefile makefile-OLD ; fi
-		sed -f cmsfscfg.sed < cmsfs.makefile > makefile
-		@echo "$(MAKE): the makefile has been updated"
-		@echo " "
+                @rm -f makefile-OLD makefile.old
+                @if [ -f makefile ] ; then mv makefile makefile-OLD ; fi
+                sed -f cmsfscfg.sed < cmsfs.makefile > makefile
+                @echo "$(MAKE): the makefile has been updated"
+                @echo " "
 
 makefile.in:    cmsfs.makefile
-		@rm -f makefile.in
-		cp -p cmsfs.makefile makefile.in
-		@touch makefile.in
+                @rm -f makefile.in
+                cp -p cmsfs.makefile makefile.in
+                @touch makefile.in
 
 cmsfscfg.sed:   cmsfssed.sh
-		rm -f cmsfscfg.sed
-		@chmod +x cmsfssed.sh
-		sh -c ' exec ./cmsfssed.sh ' > cmsfscfg.sed
+                rm -f cmsfscfg.sed
+                @chmod +x cmsfssed.sh
+                sh -c ' exec ./cmsfssed.sh ' > cmsfscfg.sed
 
-#cmsfsmak.sed:	cmsfssed.sh
-#		rm -f cmsfsmak.sed
-#		@chmod +x cmsfssed.sh
-#		sh -c ' exec ./cmsfssed.sh ' > cmsfsmak.sed
+#cmsfsmak.sed:  cmsfssed.sh
+#               rm -f cmsfsmak.sed
+#               @chmod +x cmsfssed.sh
+#               sh -c ' exec ./cmsfssed.sh ' > cmsfsmak.sed
 
 #
 ################################################################# CONFIG
@@ -73,24 +80,24 @@ config:         configure
                 @chmod +x configure
                 sh -c ' ./configure '
 #               @echo $(MAKE) makefile
-#		@echo @rm -f cmsfsvfs.c
-#		@echo $(MAKE) cmsfsvfs.c
+#               @echo @rm -f cmsfsvfs.c
+#               @echo $(MAKE) cmsfsvfs.c
 
 configure:      cmsfscfg.sh
-		@rm -f configure-OLD
+                @rm -f configure-OLD
              @if [ -f configure ] ; then mv configure configure-OLD ; fi
                 cp cmsfscfg.sh configure
                 chmod +x configure
 
-cmsfsvfs.c:	$(DRIVER_SOURCE)
-		@rm -f cmsfsvfs.c
-		@if [ ! -z "$(DRIVER_SOURCE)" ] ; then \
-			echo "    ln -s $(DRIVER_SOURCE) cmsfsvfs.c" ; \
-			ln -s $(DRIVER_SOURCE) cmsfsvfs.c ; fi
+cmsfsvfs.c:     $(DRIVER_SOURCE)
+                @rm -f cmsfsvfs.c
+                @if [ ! -z "$(DRIVER_SOURCE)" ] ; then \
+                        echo "    ln -s $(DRIVER_SOURCE) cmsfsvfs.c" ; \
+                        ln -s $(DRIVER_SOURCE) cmsfsvfs.c ; fi
 
 #
 ################################################################### DOCS
-docs doc :	README LICENSE INSTALL CREDITS cmsfsext.html
+docs doc :      README LICENSE INSTALL CREDITS cmsfsext.html
 
 README:         cmsfs.txt
                 @if [ -f README ] ; then mv README README-OLD ; fi
@@ -108,22 +115,22 @@ CREDITS:        cmsfswho.txt
                 @if [ -f CREDITS ] ; then mv CREDITS CREDITS-OLD ; fi
                 cp -p cmsfswho.txt CREDITS
 
-cmsfsext.html:	makefile cmsfsext.h cmsfsext.htmlhead cmsfsext.htmltail 
-		@rm -f cmsfsext.html 
-		cat cmsfsext.htmlhead > cmsfsext.tmp 
-		grep CMSFS cmsfsext.h | grep ',' | grep '"' \
-			| awk -F'{' '{print $$2}' \
-			| awk -F'}' '{print $$1}' \
-			| grep -v CMSFSANY | grep -v '*' \
-			| sed 's/CMSFSTXT/plain text/' \
-			| sed 's/CMSFSEXE/executable/' \
-			| sed 's/CMSFSBIN/binary/' \
-		      | sed 's/CMSFSRAW/binary (with record lengths)/' \
-			| sed 's#"#<td><tt>#' | sed 's#"#</tt><td>#' \
-			| sed 's/,/ /g' | sed 's/|/,/g' \
-		      | awk '{print "<tr>" $$0 "</tr>"}' >> cmsfsext.tmp 
-		cat cmsfsext.htmltail >> cmsfsext.tmp 
-		mv cmsfsext.tmp cmsfsext.html 
+cmsfsext.html:  makefile cmsfsext.h cmsfsext.htmlhead cmsfsext.htmltail 
+                @rm -f cmsfsext.html 
+                cat cmsfsext.htmlhead > cmsfsext.tmp 
+                grep CMSFS cmsfsext.h | grep ',' | grep '"' \
+                        | awk -F'{' '{print $$2}' \
+                        | awk -F'}' '{print $$1}' \
+                        | grep -v CMSFSANY | grep -v '*' \
+                        | sed 's/CMSFSTXT/plain text/' \
+                        | sed 's/CMSFSEXE/executable/' \
+                        | sed 's/CMSFSBIN/binary/' \
+                      | sed 's/CMSFSRAW/binary (with record lengths)/' \
+                        | sed 's#"#<td><tt>#' | sed 's#"#</tt><td>#' \
+                        | sed 's/,/ /g' | sed 's/|/,/g' \
+                      | awk '{print "<tr>" $$0 "</tr>"}' >> cmsfsext.tmp 
+                cat cmsfsext.htmltail >> cmsfsext.tmp 
+                mv cmsfsext.tmp cmsfsext.html 
  
 ########################################################################
 
@@ -215,19 +222,19 @@ module modules :  cmsfs.o
 
 # 
 # 
-test:		cmsfsck cmsfscat cmsfslst cmsfscp cmsfsvol 
-		./cmsfsck dsk/cms1fs.dsk 
-	       ./cmsfscat -d dsk/cms1fs.dsk -a cmsfs.makefile >/dev/null 
-		./cmsfslst -d dsk/cms1fs.dsk                  >/dev/null 
-	     ./cmsfscp -d dsk/cms1fs.dsk -p -a cmsfs.makefile cms1fs.tmp 
-		@rm cms1fs.tmp 
-		./cmsfsvol dsk/cms1fs.dsk 
-		@echo "$(MAKE): utility passed all tests" 
+test:           cmsfsck cmsfscat cmsfslst cmsfscp cmsfsvol 
+                ./cmsfsck dsk/cms1fs.dsk 
+               ./cmsfscat -d dsk/cms1fs.dsk -a cmsfs.makefile >/dev/null 
+                ./cmsfslst -d dsk/cms1fs.dsk                  >/dev/null 
+             ./cmsfscp -d dsk/cms1fs.dsk -p -a cmsfs.makefile cms1fs.tmp 
+                @rm cms1fs.tmp 
+                ./cmsfsvol dsk/cms1fs.dsk 
+                @echo "$(MAKE): utility passed all tests" 
 
 
 ########################################################################
 /usr/src/linux/fs/cmsfs:  cmsfsvfs.c cmsfsany.c cmsfsvfs.filelist \
-			cmsfs.h aecs.c aecs.h
+                        cmsfs.h aecs.c aecs.h
                 mkdir /usr/src/linux/fs/cmsfs
                 @cat cmsfsvfs.filelist | grep -v '^*' \
                     | awk '{print tolower($$1) "." tolower($$2) " " \
@@ -239,25 +246,35 @@ test:		cmsfsck cmsfscat cmsfslst cmsfscp cmsfsvol
 #
 #
 install:        $(OBJECTS) libcmsfs.a
-		mkdir -p $(PREFIX)/bin
+                mkdir -p $(PREFIX)/bin
                 for F in $(OBJECTS) ; do \
                         rm -f $(PREFIX)/bin/$$F ; \
                         cp -p $$F $(PREFIX)/bin/. ; done
-		mkdir -p $(PREFIX)/lib
+                mkdir -p $(PREFIX)/lib
                 rm -f $(PREFIX)/lib/libcmsfs.a
                 cp -p libcmsfs.a $(PREFIX)/lib/.
-###             $(MAKE) /sbin/fsck.cms
-#               touch install
-		mkdir -p $(PREFIX)/man/man8
-		cp -p *.8 $(PREFIX)/man/man8/.
+#
+                mkdir -p $(PREFIX)/man/man8
+                cp -p *.8 $(PREFIX)/man/man8/.
+#
+                mkdir -p $(SBINDIR)
+                rm -f $(SBINDIR)/fsck.cms
+                cp -p cmsfsck $(SBINDIR)/fsck.cms
+#
+                mkdir -p $(ETCDIR)/init.d
+                cp -p cmsfsrun.init $(ETCDIR)/init.d/cmsfsrun
+                mkdir -p $(ETCDIR)/sysconfig
+                cp -p cmsfsrun.cfg $(ETCDIR)/sysconfig/cmsfsrun
+                mkdir -p $(PREFIX)/lib/systemd/system
+                cp -p cmsfsrun.service $(PREFIX)/lib/systemd/system/.
 
 #
 #
 module_install modules_install :  cmsfs.o cmsfsck
-		@test ! -z "$(MODULES_DIRECTORY)"
+                @test ! -z "$(MODULES_DIRECTORY)"
 #/sbin/fsck.cms:  $(PREFIX)/bin/cmsfsck
-		rm -f $(MODULES_DIRECTORY)/cmsfs.o
-		cp -p cmsfs.o $(MODULES_DIRECTORY)/.
+                rm -f $(MODULES_DIRECTORY)/cmsfs.o
+                cp -p cmsfs.o $(MODULES_DIRECTORY)/.
                 rm -f /sbin/fsck.cms
                 cp -p cmsfsck /sbin/fsck.cms
 
@@ -277,19 +294,19 @@ rpm:            install
 #
 # get the latest from the development minidisk
 _refresh refresh:  cmsfslst cmsfscp $(XEDITSRC)
-		@test -r $(XEDITSRC)
-		mkdir -p cmsfstmp
-		./cmsfslst -d $(XEDITSRC) | tail +4 \
-			| awk '{print $$1 "." $$2}' \
-			| grep -v ':' | grep -v '.-.' \
-			| tr A-Z a-z > cmsfstmp/.list
-		for F in `cat cmsfstmp/.list` ; do \
-			./cmsfscp -d $(XEDITSRC) \
-				-p -a $$F cmsfstmp/$$F ; \
-			done
-		rm cmsfstmp/.list
-#		sh -c ' new -d cmsfstmp/* . '
-		rm -r cmsfstmp
+                @test -r $(XEDITSRC)
+                mkdir -p cmsfstmp
+                ./cmsfslst -d $(XEDITSRC) | tail +4 \
+                        | awk '{print $$1 "." $$2}' \
+                        | grep -v ':' | grep -v '.-.' \
+                        | tr A-Z a-z > cmsfstmp/.list
+                for F in `cat cmsfstmp/.list` ; do \
+                        ./cmsfscp -d $(XEDITSRC) \
+                                -p -a $$F cmsfstmp/$$F ; \
+                        done
+                rm cmsfstmp/.list
+#               sh -c ' new -d cmsfstmp/* . '
+                rm -r cmsfstmp
 
 #
 #
@@ -310,8 +327,8 @@ cmsfsedf-CMS.bin:
           | runpipe
 
 cmsfsedf-i386.bin:
-	@echo "$(MAKE): you need to be on CMS to do this"
-	@sh -c ' exit 24 '
+        @echo "$(MAKE): you need to be on CMS to do this"
+        @sh -c ' exit 24 '
 
 #
 # exercise this stuff
@@ -353,14 +370,14 @@ clean:
                         a.out core *.exe CEEDUMP* \
                         driver module install
                 @rm -f testmake* newmake* testfile*
-#		@rm -f makefile* Makefile* ERR
+#               @rm -f makefile* Makefile* ERR
 
 #
 #
 distclean veryclean :
-		@$(MAKE) clean
+                @$(MAKE) clean
 #               rm -f makefile* Makefile*
-		rm -f cmsfsvfs* *.sed
+                rm -f cmsfsvfs* *.sed
                 @touch "temp:file"
                 find . -type f -print | grep ':' | xargs rm
                 @touch "temp;file"
@@ -368,21 +385,20 @@ distclean veryclean :
 
 # 
 # 
-cmsagain:	makefile 
-		ls -d *.* | grep -v ';' | grep -v ':' \
-			| awk -F'.' '{print "cms openvm getbfs " $$0 \
-			" " $$1 " " $$2 " a \\( olddate replace"}' \
-			| sh -x 
+cmsagain:       makefile 
+                ls -d *.* | grep -v ';' | grep -v ':' \
+                        | awk -F'.' '{print "cms openvm getbfs " $$0 \
+                        " " $$1 " " $$2 " a \\( olddate replace"}' \
+                        | sh -x 
  
 #
 # good idea for 'make help' to be useful
-help:		makefile
+help:           makefile
                 @echo "$(MAKE):"
                 @echo "$(MAKE):  some targets for this directory are:"
                 @echo "$(MAKE):    all, module, install, clean"
                 @echo "$(MAKE):"
                 @echo "$(MAKE):  configure with ./configure"
                 @echo "$(MAKE):"
-
 
 

@@ -15,6 +15,10 @@
  *
  */
 
+#include <ctype.h>
+
+#include "aecs.h"
+
 /* ------------------------------------------------------------ CMSFSBEX
  *  This function was moved to cmsfsusa.c (the utility source).
  *  FS driver should use kernel header macros for endian conversion.
@@ -551,7 +555,7 @@ nrecs += cmsfst.FSTRECCT[1];
  *  Map a CMS filetype (sometimes called an "extension").
  *  The terms "filetype" and "extension" are used interchangably here.
  */
-#include        "cmsfsext.h"
+#include "cmsfsext.h"
 void cmsfs_map_EXT(struct CMSINODE * fi)
   {
     int     i;
@@ -1097,6 +1101,5 @@ long int cmsfs_bytes(struct CMSINODE * fi)
 
     return fi->bytes;
   }
-
 
 

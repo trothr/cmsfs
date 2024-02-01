@@ -11,14 +11,15 @@
  *
  */
 
-#include        <time.h>
-#include        <stdio.h>
-#include        <fcntl.h>
-#include        <errno.h>
-#include        <string.h>
+#include <time.h>
+#include <stdio.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <string.h>
+#include <unistd.h>
 
-#include        "cmsfs.h"
-/* #include     "aecs.h" */
+#include "cmsfs.h"
+/* include "aecs.h" */
 
 /* --------------------------------------------------------- CMSFS_ERROR
  *  Generally a printk() operation, not really perror() function.
@@ -87,7 +88,7 @@ int cmsfs_bread(struct CMSSUPER *vol,void *buf,int block,int blocksize)
  *  Ordinary malloc() call, since we are in user space.
  *  There is a similar wrapper around kmalloc() for the FS driver.
  */
-#include        <malloc.h>
+#include <malloc.h>
 void * cmsfs_malloc(int size)
   {
     return (void*) malloc(size);
@@ -130,7 +131,7 @@ int cmsfsbex ( unsigned char *ivalue , int l )
 #define         cmsfs_mktime(p)         mktime(p)
 #define be32_to_cpu(i) cmsfsbex((unsigned char *)&(i),4)
 #define be16_to_cpu(i) cmsfsbex((unsigned char *)&(i),2)
-#include        "cmsfsany.c"
+#include "cmsfsany.c"
 
 
 /* utility mode stuff follows ... */

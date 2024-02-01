@@ -2,9 +2,10 @@
 #
 #
 #         Name: CMSFSSED SH (shell script)
-#               should be copied to  'configure'  and executed
-#               Adds leading TAB characters required by 'make'
-#               and performs other substitutions based on platform.
+#               should be copied to 'cmsfssed.sh' and executed
+#               Output is a 'sed' file which adds leading TAB characters
+#               required by 'make' and performs other substitutions
+#               based on platform and desired customizations.
 #       Author: Rick Troth, BMC Software, Inc., Houston, Texas, USA
 #         Date: 2000-Nov-03 (Fri)
 #               2002-Nov-04 (Mon)
@@ -24,6 +25,8 @@ Z=`basename "$0"`
 #
 #
 PREFIX="/usr"
+ETCDIR="/etc"
+SBINDIR="/sbin"
 DEFINES=""
 INCLUDES=""
 LINUX_RELEASE=""
@@ -146,8 +149,20 @@ case `uname -s` in
 esac
 
 #
+# special handling if installation prefix is /usr
+if [ "$PREFIX" = "/usr" ] ; then
+    ETCDIR="/etc"
+    SBINDIR="/sbin"
+  else
+    ETCDIR="$PREFIX/etc"
+    SBINDIR="$PREFIX/sbin"
+fi
+
+#
 # platform-specific substutions ...
 echo "s#%PREFIX%#$PREFIX#g"
+echo "s#%ETCDIR%#$ETCDIR#g"
+echo "s#%SBINDIR%#$SBINDIR#g"
 echo "s#%DEFINES%#$DEFINES#g"
 echo "s#%INCLUDES%#$INCLUDES#g"
 echo "s#%LINUX_RELEASE%#$LINUX_RELEASE#g"

@@ -4,8 +4,8 @@
  *              preprocessor definitions for the CMS filesystem package
  *        Date: 2000-Jun-14 (Wed)
  *              Copyright © 2001, 2003, distributed under GPL
- *              Rick Troth <rtroth@bmc.com>
  *              BMC Software, Inc., Houston, Texas, USA
+ *        Date: 2024-02-04 (Sun)
  *              Rick Troth <rmt@casita.net>
  *
  *              Some specifications contained here were taken from
@@ -23,10 +23,12 @@
  *
  */
 
+#ifndef _CMSFS_H
+
 #define         CMSFS_AUTHOR            "Rick Troth <rmt@casita.net>"
 #define         CMSFS_DESCRIPTION       "CMS Minidisk Filesystem Support"
-#define         CMSFS_VERSION           "1.1.11"
-#define         CMSFS_DATE              "2023-09-05"   /* 2023-Sep-05 */
+#define         CMSFS_VERSION           "1.1.12"
+#define         CMSFS_DATE              "2024-02-04"   /* 2024-Feb-04 */
 /*        Note! The "v" and "r" of the VRM should match               *
  *              between this header and the RPM "spec" file.          *
  *              The "m" (VRM) and the "release" (RPM) might not.      */
@@ -478,6 +480,7 @@ int cmsfs_map_FST(struct CMSINODE *,struct CMSFSFST *);
 void cmsfs_map_EXT(struct CMSINODE *);
 struct CMSINODE * cmsfs_lookup(struct CMSINODE *,unsigned char *);
 ssize_t cmsfs_read(struct CMSINODE *,void *,size_t);
+int cmsfsrd2(struct CMSINODE *,void *,int);
 
 /* ------------------------------------------------------------------ *
  *  Function Prototypes used by the utility                           *
@@ -511,5 +514,8 @@ void cmsfs_xdump(unsigned char *,int);
 static unsigned char cmsfs_ermsg[256];
 
 
+
+
+#endif
 
 

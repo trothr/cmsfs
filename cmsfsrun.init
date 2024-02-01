@@ -104,10 +104,13 @@ RRC=$?
 
 #
 # if the read was successful and the file is not empty then run it
-if [ "$RRC" -eq 0 -a -s $CMSFSRUN_TEMP/$CMSFSRUN_FILE ] ; then
-  chmod +x $CMSFSRUN_TEMP/$CMSFSRUN_FILE
-  $CMSFSRUN_TEMP/$CMSFSRUN_FILE ; RC=$?
-else RC=0 ; fi
+if [ "$RRC" -eq 0 ] ; then
+    if [ -s $CMSFSRUN_TEMP/$CMSFSRUN_FILE ] ; then
+    chmod +x $CMSFSRUN_TEMP/$CMSFSRUN_FILE
+    $CMSFSRUN_TEMP/$CMSFSRUN_FILE ; RC=$?
+#   sh $CMSFSRUN_TEMP/$CMSFSRUN_FILE ; RC=$?     # alternate if "noexec"
+    else RC=0 ; fi
+else RC=$RRC ; fi
 
 #
 # if the 191 disk was offline when we started then restore that state

@@ -9,7 +9,7 @@
 *
 * Package Manifest (this file):
       CMSFS    FILELIST *  MANIFEST
-      CMSFSVFS FILELIST *  MANIFEST-DRIVER
+*     CMSFSVFS FILELIST *  MANIFEST-DRIVER                  # deprecated
 *
       CMSFS    TXT      *  README
       CMSFSGPL TXT      *  LICENSE
@@ -32,7 +32,7 @@
       CMSFS    MAKEFILE *
       CMSFSVFS MAKEFILE *
       CMSFSCFG SH       *  configure
-      CMSFSTAB SH       *
+*     CMSFSTAB SH       *                                   # deprecated
       CMSFSSED SH       *
       CMSMOUNT 8        *
 *
@@ -59,4 +59,13 @@
       _TESTRUN SH       *
       CMSFSDD  EXEC     *
       CMSFS    SPEC     *
+      CMSFSRUN INIT     *
+      CMSFSRUN CFG      *
+      CMSFSRUN SERVICE  *
+*
+* Generated files:
+*     ........ ........ .. inventory
+*     ........ ........ .. makefile
+*     CMSFSCFG SED
+*     MAKEFILE IN
 *

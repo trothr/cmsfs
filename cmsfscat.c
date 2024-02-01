@@ -20,12 +20,13 @@
  *
  */
 
-#include        <stdlib.h>
-#include        <stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
 /* cheezy way to get time_t def'd */
-#include        <utime.h>
+#include <utime.h>
+#include <unistd.h>
 
-#include        "cmsfs.h"
+#include "cmsfs.h"
 
 #define  USAGE  "Usage: %s [ -d cmsvol ] [ -a | -i ] cmsfile [cmsfile ...]\n"
 

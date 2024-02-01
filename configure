@@ -2,12 +2,12 @@
 #
 #
 #         Name: CMSFSCFG SH (shell script)
-#               should be copied to  'configure'  and executed
-#               Adds leading TAB characters required by 'make'
-#               and performs other substitutions based on platform.
+#               should be copied to 'configure' and executed
+#     See also: CMSFSSED SH (cmsfssed.sh)
 #       Author: Rick Troth, BMC Software, Inc., Houston, Texas, USA
 #         Date: 2000-Nov-03 (Fri)
-#		2002-Nov-08 (Fri)
+#               2002-Nov-08 (Fri)
+#               2024-01-30 (Wed)
 #
 #
 
@@ -42,9 +42,9 @@ if [ "$RC" != 0 ] ; then exit $RC ; fi
 #
 # retrieve substitutions from the 'sed' operation
 sh -c ' echo "PREFIX=%PREFIX%" ; \
-	echo "MODULES_DIRECTORY=%MODULES_DIRECTORY%" ; \
-	echo "DRIVER_SOURCE=%DRIVER_SOURCE%"' \
-	| sed -f cmsfscfg.sed > cmsfscfg.tmp
+        echo "MODULES_DIRECTORY=%MODULES_DIRECTORY%" ; \
+        echo "DRIVER_SOURCE=%DRIVER_SOURCE%"' \
+        | sed -f cmsfscfg.sed > cmsfscfg.tmp
 # s#%DEFINES%#-DCMSFS_HOST_ASCII#g
 # s#%INCLUDES%##g
 # s#%LINUX_RELEASE%#2.2#g
@@ -54,11 +54,11 @@ rm cmsfscfg.tmp
 #
 # report
 if [ ! -z "$PREFIX" ] ; then
-	echo "*** will install utilities to '$PREFIX'" ; fi
+        echo "*** will install CMS FS utilities to '$PREFIX'" ; fi
 if [ ! -z "$MODULES_DIRECTORY" ] ; then
-	echo "*** will install module to '$MODULES_DIRECTORY'" ; fi
+        echo "*** will install module to '$MODULES_DIRECTORY'" ; fi
 if [ ! -z "$DRIVER_SOURCE" ] ; then
-	echo "*** using driver source '$DRIVER_SOURCE' for VFS" ; fi
+        echo "*** using driver source '$DRIVER_SOURCE' for VFS" ; fi
 
 #
 # report
@@ -77,8 +77,5 @@ if [ "$RC" != 0 ] ; then exit $RC ; fi
 # be sure we're set-up for the right driver
 rm -f cmsfsvfs.c
 $MAKE cmsfsvfs.c
-
-
-
 
 

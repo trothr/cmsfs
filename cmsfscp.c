@@ -22,14 +22,15 @@
  *
  */
 
-#include        <fcntl.h>
-#include        <utime.h>
-#include        <malloc.h>
-#include        <sys/stat.h>
-#include        <stdio.h>
-#include        <string.h>
+#include <fcntl.h>
+#include <utime.h>
+#include <malloc.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
 
-#include        "cmsfs.h"
+#include "cmsfs.h"
 
 #define  USAGE  "Usage: %s [ -d cmsvol ] [ -a | -i ] cmsfile unixfile\n"
 
