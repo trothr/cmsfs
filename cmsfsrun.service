@@ -1,0 +1,20 @@
+[Unit]
+Description=CMSFSRUN Profile from CMS minidisk
+After=network.target
+
+[Service]
+Type=notify
+EnvironmentFile=-/etc/sysconfig/cmsfsrun
+#ExecStartPre=/usr/sbin/sshd-gen-keys-start
+#ExecStartPre=/usr/sbin/sshd -t $SSHD_OPTS
+ExecStart=/etc/init.d/cmsfsrun start
+#ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartPreventExitStatus=255
+TasksMax=infinity
+
+[Install]
+WantedBy=multi-user.target
+
+

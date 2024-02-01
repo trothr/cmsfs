@@ -9,7 +9,15 @@
 
 #
 # the name of the file on the CMS 191 disk which we are after
-FILE=profile.sh
+CMSFSRUN_FILE=profile.sh
+
+#
+# a temporary directory where we will do our work (gets deleted)
+CMSFSRUN_TEMP=/dev/shm/cmsfs
+
+#
+# the block device of the 191 disk which we are after
+CMSFSRUN_DISK=191
 
 ### BEGIN INIT INFO
 # Provides:             cmsfsrun
@@ -29,15 +37,20 @@ if [ -z "$CHCCWDEV" ] ; then exit ; fi
 #       but make more sense on s390/s390x Linux on top of z/VM.
 
 #
-# the following case block renders this a viable INIT script
-# (except that we really should follow LSB about the comments)
-# (which we hope to do ... soon ... real soon)
+# hello, world!
+#echo "$0 $*" > /dev/console
 
-echo "$0 $*" > /dev/console
-
+#
+# if we have a configuration file then source it for overrides
 if [ -r /etc/sysconfig/cmsfsrun ] ; then
       . /etc/sysconfig/cmsfsrun ; fi
 
+#
+# force the device address to be four hex digits in length
+DISK=`echo "0000$CMSFSRUN_DISK" | rev | awk '{print substr($0,0,4)}' | rev`
+
+#
+# the following case block renders this a viable INIT script
 case $1 in
 
   start)
@@ -69,15 +82,15 @@ esac
 
 #
 # retrieve the block device name of the 191 disk
-D191=`grep '^0\.0\.0191' /proc/dasd/devices \
+D191=`grep '^0\.0\.$DISK' /proc/dasd/devices \
   | awk -F ')' '{print $3}' | awk '{print $2}'`
 # if it is not listed then try to vary the 191 disk online
 if [ -z "$D191" ] ; then
   D191R=OFF
-#  echo "+ chccwdev -e 191"
-          chccwdev -e 191 1> /dev/null 2> /dev/null
+# echo "+ chccwdev -e $DISK"
+          chccwdev -e $DISK 1> /dev/null 2> /dev/null
 # try again to get the device name from the kernel
-  D191=`grep '^0\.0\.0191' /proc/dasd/devices \
+  D191=`grep '^0\.0\.$DISK' /proc/dasd/devices \
     | awk -F ')' '{print $3}' | awk '{print $2}'`
 fi
 # if it still does not show up then exit silently
@@ -85,27 +98,27 @@ if [ -z "$D191" ] ; then exit ; fi
 
 #
 # read the file of interest from CMS space
-mkdir -p -m 700 /dev/shm/cmsfs
-cmsfscat -d /dev/$D191 -a $FILE 1> /dev/shm/cmsfs/$FILE 2> /dev/null
+mkdir -p -m 700 $CMSFSRUN_TEMP
+cmsfscat -d /dev/$D191 -a $CMSFSRUN_FILE 1> $CMSFSRUN_TEMP/$CMSFSRUN_FILE 2> /dev/null
 RRC=$?
 
 #
 # if the read was successful and the file is not empty then run it
-if [ "$RRC" -eq 0 -a -s /dev/shm/cmsfs/$FILE ] ; then
-  chmod +x /dev/shm/cmsfs/$FILE
-  /dev/shm/cmsfs/$FILE ; RC=$?
+if [ "$RRC" -eq 0 -a -s $CMSFSRUN_TEMP/$CMSFSRUN_FILE ] ; then
+  chmod +x $CMSFSRUN_TEMP/$CMSFSRUN_FILE
+  $CMSFSRUN_TEMP/$CMSFSRUN_FILE ; RC=$?
 else RC=0 ; fi
 
 #
 # if the 191 disk was offline when we started then restore that state
 if [ "$D191R" = OFF ] ; then
-#  echo "+ chccwdev -d 191"
-          chccwdev -d 191 1> /dev/null 2> /dev/null
+# echo "+ chccwdev -d $DISK"
+          chccwdev -d $DISK 1> /dev/null 2> /dev/null
 fi
 
 #
 # clean up after ourselves
-rm -r /dev/shm/cmsfs
+rm -r $CMSFSRUN_TEMP
 
 exit $RC
 
