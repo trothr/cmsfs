@@ -33,7 +33,7 @@ Done in the 1.0 release:
         libcmsfs.a ---- "archive" library for user space (utility) mode
         cmsfs.o ------- the FS driver, for 'mount -t cms' to work
  
-The following objectives are not in the package as of 1.X:
+The following objectives are not in the package as of 1.x:
  
         'cmsfsls' ----- Unix style listing (already have CMS style)
         R/W capability
