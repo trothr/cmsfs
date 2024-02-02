@@ -3,9 +3,10 @@
 *         Name: CMSFS FILELIST (aka "cmsfs.filelist")
 *       Author: Rick Troth, BMC Software, Inc., Houston, Texas, USA
 *         Date: 2000-Sep-20 (Wed)
+*               2024-02-04 (Sun)
 *
 * syntax of this file:
-*     cmsfname cmsftype fm UNIXname
+*     cmsfname cmsftype fm Unixname
 *
 * Package Manifest (this file):
       CMSFS    FILELIST *  MANIFEST
@@ -68,4 +69,5 @@
 *     ........ ........ .. makefile
 *     CMSFSCFG SED
 *     MAKEFILE IN
+*
 *

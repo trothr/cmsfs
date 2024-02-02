@@ -138,7 +138,7 @@ cmsfsext.html:  makefile cmsfsext.h cmsfsext.htmlhead cmsfsext.htmltail
 # 'cmsfscat', write (concatenate) CMS files to stdout
 cmsfscat:       cmsfscat.o libcmsfs.a
                 $(CC) $(DEFINES) -o cmsfscat cmsfscat.o -L. -lcmsfs
-#               strip cmsfscat
+                strip cmsfscat
 
 cmsfscat.o:     cmsfscat.c cmsfs.h aecs.h
                 $(CC) $(DEFINES) -c cmsfscat.c
@@ -147,7 +147,7 @@ cmsfscat.o:     cmsfscat.c cmsfs.h aecs.h
 # 'cmsfslst', list CMS files in LISTFILE format
 cmsfslst:       cmsfslst.o libcmsfs.a
                 $(CC) $(DEFINES) -o cmsfslst cmsfslst.o -L. -lcmsfs
-#               strip cmsfslst
+                strip cmsfslst
 
 cmsfslst.o:     cmsfslst.c cmsfs.h aecs.h
                 $(CC) $(DEFINES) -c cmsfslst.c
@@ -156,7 +156,7 @@ cmsfslst.o:     cmsfslst.c cmsfs.h aecs.h
 # 'cmsfsvol', display CMS volume info in QUERY DISK format
 cmsfsvol:       cmsfsvol.o libcmsfs.a
                 $(CC) $(DEFINES) -o cmsfsvol cmsfsvol.o -L. -lcmsfs
-#               strip cmsfsvol
+                strip cmsfsvol
 
 cmsfsvol.o:     cmsfsvol.c cmsfs.h aecs.h
                 $(CC) $(DEFINES) -c cmsfsvol.c
@@ -165,7 +165,7 @@ cmsfsvol.o:     cmsfsvol.c cmsfs.h aecs.h
 # 'cmsfsck', filesystem check for CMS volumes
 cmsfsck:        cmsfsck.o libcmsfs.a
                 $(CC) $(DEFINES) -o cmsfsck cmsfsck.o -L. -lcmsfs
-#               strip cmsfsck
+                strip cmsfsck
 
 cmsfsck.o:      cmsfsck.c cmsfs.h aecs.h
                 $(CC) $(DEFINES) -c cmsfsck.c
@@ -174,7 +174,7 @@ cmsfsck.o:      cmsfsck.c cmsfs.h aecs.h
 # 'cmsfscp', copy files from a CMS volume
 cmsfscp:        cmsfscp.o libcmsfs.a
                 $(CC) $(DEFINES) -o cmsfscp cmsfscp.o -L. -lcmsfs
-#               strip cmsfscp
+                strip cmsfscp
 
 cmsfscp.o:      cmsfscp.c cmsfs.h aecs.h
                 $(CC) $(DEFINES) -c cmsfscp.c
@@ -183,7 +183,7 @@ cmsfscp.o:      cmsfscp.c cmsfs.h aecs.h
 # 'cmsfsls', list CMS files in Unix 'ls' format
 cmsfsls:        cmsfsls.o libcmsfs.a
                 $(CC) $(DEFINES) -o cmsfsls cmsfsls.o -L. -lcmsfs
-#               strip cmsfsls
+                strip cmsfsls
 
 cmsfsls.o:      cmsfsls.c cmsfs.h aecs.h
                 $(CC) $(DEFINES) -c cmsfsls.c
@@ -196,7 +196,7 @@ libcmsfs.a:     cmsfsusa.c cmsfsany.c cmsfs.h aecs.o aecs.h
                 ar q libcmsfs.a cmsfsusa.o aecs.o
 
 #
-#
+# ASCII/EBCDIC translation table and functions
 aecs.o:         aecs.c aecs.h
                 $(CC) $(DEFINES) -c aecs.c
 
@@ -283,8 +283,8 @@ module_install modules_install :  cmsfs.o cmsfsck
 rpm:            install
                 test "$(PREFIX)" = "/usr" 
                 rm -f rpm.log
-#                rpm -bb cmsfs.spec | tee rpm.log
-                rpmbuild -bb cmsfs.spec | tee rpm.log
+#               rpm -bb cmsfs.spec | tee rpm.log
+                rpmbuild -bb --nodeps cmsfs.spec | tee rpm.log
                 grep '^Wrote:' rpm.log \
                         | awk '{print "mv", $$2, "."}' | sh
                 rm rpm.log
