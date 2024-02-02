@@ -74,6 +74,10 @@ rm cmsfsrpm.spec
 # recover the RPM file
 cp -p $HOME/rpmbuild/RPMS/$UNAMEM/$APPLID-$APPVRM-$RPMSEQ.$UNAMEM.rpm .
 
+#
+# remove temporary build directory
+rm -r $BUILDD
+
 # increment the sequence number for the next build
 expr $RPMSEQ + 1 > .rpmseq
 

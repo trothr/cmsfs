@@ -82,7 +82,7 @@ esac
 
 #
 # retrieve the block device name of the 191 disk
-D191=`grep '^0\.0\.$DISK' /proc/dasd/devices \
+D191=`grep "^0\.0\.$DISK" /proc/dasd/devices \
   | awk -F ')' '{print $3}' | awk '{print $2}'`
 # if it is not listed then try to vary the 191 disk online
 if [ -z "$D191" ] ; then
@@ -90,8 +90,10 @@ if [ -z "$D191" ] ; then
 # echo "+ chccwdev -e $DISK"
           chccwdev -e $DISK 1> /dev/null 2> /dev/null
 # try again to get the device name from the kernel
-  D191=`grep '^0\.0\.$DISK' /proc/dasd/devices \
+  D191=`grep "^0\.0\.$DISK" /proc/dasd/devices \
     | awk -F ')' '{print $3}' | awk '{print $2}'`
+else
+  D191R=ON
 fi
 # if it still does not show up then exit silently
 if [ -z "$D191" ] ; then exit ; fi

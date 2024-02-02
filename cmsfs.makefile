@@ -38,7 +38,7 @@ MODULES_DIRECTORY  =    %MODULES_DIRECTORY%
 OBJECTS         =       cmsfscat cmsfslst cmsfsvol cmsfsck cmsfscp
 
 .PHONY:         _default all clean distclean veryclean help \
-                module install
+                module install rpm
 
 #
 # when the user does a "just make" easy build
@@ -280,14 +280,8 @@ module_install modules_install :  cmsfs.o cmsfsck
 
 #
 #
-rpm:            install
-                test "$(PREFIX)" = "/usr" 
-                rm -f rpm.log
-#               rpm -bb cmsfs.spec | tee rpm.log
-                rpmbuild -bb --nodeps cmsfs.spec | tee rpm.log
-                grep '^Wrote:' rpm.log \
-                        | awk '{print "mv", $$2, "."}' | sh
-                rm rpm.log
+rpm:
+                ./cmsfsrpm.sh
 
 ########################################################################
 
