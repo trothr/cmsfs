@@ -24,7 +24,10 @@
 
 #include <fcntl.h>
 #include <utime.h>
-#include <malloc.h>
+
+/* include <malloc.h> */
+#include <stdlib.h>
+
 #include <sys/stat.h>
 #include <stdio.h>
 #include <string.h>
@@ -34,7 +37,7 @@
 
 #define  USAGE  "Usage: %s [ -d cmsvol ] [ -a | -i ] cmsfile unixfile\n"
 
-int main(int argc,unsigned char *argv[])
+int main(int argc,char*argv[])
   {
     struct  utimbuf  stdtime;
     struct  CMSINODE  *cmsfile;         /*  CMS file handle  */

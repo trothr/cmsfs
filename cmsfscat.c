@@ -31,7 +31,7 @@
 #define  USAGE  "Usage: %s [ -d cmsvol ] [ -a | -i ] cmsfile [cmsfile ...]\n"
 
 /* ------------------------------------------------------------------ */
-int main(int argc,unsigned char *argv[])
+int main(int argc,char*argv[])
   {
     int         i, rc, j, k, l, catflags;
     unsigned char *devname, *filename;

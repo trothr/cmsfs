@@ -32,7 +32,8 @@ CMSFSRUN_DISK=191
 #
 # are we running on System z or s390 or s390x?
 CHCCWDEV=`which chccwdev 2> /dev/null`
-if [ -z "$CHCCWDEV" ] ; then exit ; fi
+CHZDEV=`which chzdev 2> /dev/null`
+if [ -z "$CHCCWDEV" -a -z "$CHZDEV" ] ; then exit ; fi
 # Note: CMS FS utilities can run on any platform,
 #       but make more sense on s390/s390x Linux on top of z/VM.
 
@@ -87,8 +88,10 @@ D191=`grep "^0\.0\.$DISK" /proc/dasd/devices \
 # if it is not listed then try to vary the 191 disk online
 if [ -z "$D191" ] ; then
   D191R=OFF
-# echo "+ chccwdev -e $DISK"
-          chccwdev -e $DISK 1> /dev/null 2> /dev/null
+  if [ -z "$CHZDEV" ]
+    then chccwdev -e $DISK 1> /dev/null 2> /dev/null
+    else chzdev -e dasd $DISK 1> /dev/null 2> /dev/null
+  fi
 # try again to get the device name from the kernel
   D191=`grep "^0\.0\.$DISK" /proc/dasd/devices \
     | awk -F ')' '{print $3}' | awk '{print $2}'`
@@ -117,8 +120,12 @@ else RC=$RRC ; fi
 #
 # if the 191 disk was offline when we started then restore that state
 if [ "$D191R" = OFF ] ; then
-# echo "+ chccwdev -d $DISK"
-          chccwdev -d $DISK 1> /dev/null 2> /dev/null
+  if [ -z "$CHZDEV" ]
+    then chccwdev -d $DISK 1> /dev/null 2> /dev/null
+    else chzdev -d dasd $DISK 1> /dev/null 2> /dev/null
+  fi
+
+
 fi
 
 #

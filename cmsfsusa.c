@@ -88,7 +88,8 @@ int cmsfs_bread(struct CMSSUPER *vol,void *buf,int block,int blocksize)
  *  Ordinary malloc() call, since we are in user space.
  *  There is a similar wrapper around kmalloc() for the FS driver.
  */
-#include <malloc.h>
+/* include <malloc.h> */
+#include <stdlib.h>
 void * cmsfs_malloc(int size)
   {
     return (void*) malloc(size);

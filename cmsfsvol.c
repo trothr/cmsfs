@@ -15,7 +15,7 @@
 #define  USAGE  "Usage: %s [ -d ] cmsvol [cmsvol ...]\n"
 
 /* ------------------------------------------------------------------ */
-int main(int argc,unsigned char *argv[])
+int main(int argc,char*argv[])
   {
     int         i, percent;
     struct  CMSSUPER  *tempvols;

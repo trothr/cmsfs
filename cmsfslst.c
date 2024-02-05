@@ -15,7 +15,7 @@
 #define  USAGE  "Usage: %s -d cmsvol\n"
 
 /* ------------------------------------------------------------------ */
-int main(int argc,unsigned char *argv[])
+int main(int argc,char*argv[])
   {
     int         i, j, k, rc, percent;
     unsigned char  *devname;
